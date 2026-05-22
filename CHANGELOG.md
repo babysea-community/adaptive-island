@@ -4,6 +4,12 @@ All notable changes will be documented here. The format follows [Keep a Changelo
 
 ## Unreleased
 
+## [0.3.1] - 2026-05-22
+
+### Added
+
+- Added a CircleCI native badge.
+
 ## [0.3.0] - 2026-05-22
 
 ### Added

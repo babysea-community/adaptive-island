@@ -37,8 +37,8 @@
 
 <strong>Checks</strong>
 
+[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/2uTLcwc4naeNuKDP41es88/2J2hRNFoYs3zzDnuULUTR3/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/2uTLcwc4naeNuKDP41es88/2J2hRNFoYs3zzDnuULUTR3/tree/main)
 [![Snyk](https://img.shields.io/badge/security-snyk-4203B2?style=for-the-badge&logo=snyk&logoColor=white)](https://snyk.io/test/github/babysea-community/adaptive-island?targetFile=package.json)
-[![CircleCI](https://img.shields.io/badge/dynamic/xml?url=https%3A%2F%2Fdl.circleci.com%2Fstatus-badge%2Fimg%2Fcircleci%2F2uTLcwc4naeNuKDP41es88%2F2J2hRNFoYs3zzDnuULUTR3%2Ftree%2Fmain.svg%3Fstyle%3Dshield&query=%2F%2F%2A%5Blocal-name%28%29%3D%27text%27%5D%5Blast%28%29%5D&label=circleci&color=049B4A&style=for-the-badge&logo=circleci&logoColor=white)](https://dl.circleci.com/status-badge/redirect/circleci/2uTLcwc4naeNuKDP41es88/2J2hRNFoYs3zzDnuULUTR3/tree/main)
 [![Codecov](https://img.shields.io/codecov/c/github/babysea-community/adaptive-island?style=for-the-badge&logo=codecov&logoColor=white&color=FF0077&token=agMk6Yntq6)](https://codecov.io/github/babysea-community/adaptive-island)
 [![Sentry Check](https://img.shields.io/github/actions/workflow/status/babysea-community/adaptive-island/sentry-check.yml?style=for-the-badge&label=sentry+check&logo=sentry&logoColor=white)](https://github.com/babysea-community/adaptive-island/actions/workflows/sentry-check.yml)
 [![CodeQL](https://img.shields.io/github/actions/workflow/status/babysea-community/adaptive-island/codeql.yml?style=for-the-badge&label=codeql&logo=github&logoColor=white)](https://github.com/babysea-community/adaptive-island/actions/workflows/codeql.yml)

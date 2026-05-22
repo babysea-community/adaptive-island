@@ -36,6 +36,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: client/typescript/coverage/lcov.info
+          disable_search: true
           fail_ci_if_error: true
       - run: npm run build
       - name: Local SDK demo

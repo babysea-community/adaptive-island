@@ -1,6 +1,6 @@
 {
   "name": "adaptive-island",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "Cache-first provider selection engine for multi-provider inference workloads. Built with Databricks, Supabase, and Upstash.",
   "license": "Apache-2.0",
   "author": "BabySea, Inc. <dev@babysea.ai>",

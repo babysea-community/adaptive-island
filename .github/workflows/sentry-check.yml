@@ -1,0 +1,48 @@
+name: Sentry Project Check
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '45 3 * * 1'
+
+permissions:
+  contents: read
+
+jobs:
+  sentry:
+    name: Sentry project wiring
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      - name: Validate Sentry checker script
+        run: node --check scripts/sentry-project-check.mjs
+      - name: Verify Sentry project wiring
+        if: ${{ github.event_name != 'pull_request' }}
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+          SENTRY_EXPECTED_PLATFORM: other
+          SENTRY_STRICT_OWNERSHIP: '1'
+          SENTRY_ALLOW_PERMISSION_SKIP: '1'
+        run: |
+          if [[ -z "${SENTRY_AUTH_TOKEN}" && -z "${SENTRY_ORG}" && -z "${SENTRY_PROJECT}" ]]; then
+            echo "::notice title=Sentry project check skipped::SENTRY_AUTH_TOKEN, SENTRY_ORG, and SENTRY_PROJECT must be configured as repository secrets."
+            exit 0
+          fi
+          if [[ -z "${SENTRY_AUTH_TOKEN}" || -z "${SENTRY_ORG}" || -z "${SENTRY_PROJECT}" ]]; then
+            echo "::error title=Sentry project check misconfigured::Configure SENTRY_AUTH_TOKEN, SENTRY_ORG, and SENTRY_PROJECT together, or leave all three unset."
+            exit 1
+          fi
+          node scripts/sentry-project-check.mjs
+      - name: Skip Sentry secret on pull requests
+        if: ${{ github.event_name == 'pull_request' }}
+        run: echo "Sentry secrets are not used during pull_request runs; push, scheduled, and manual checks verify project wiring."

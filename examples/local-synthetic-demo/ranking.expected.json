@@ -1,0 +1,11 @@
+{
+  "providers_ranked": ["provider_b", "provider_c", "provider_a"],
+  "scores": {
+    "provider_a": -0.3,
+    "provider_b": 0.8825,
+    "provider_c": 0.265
+  },
+  "attempts_total": 9,
+  "window_hours": 24,
+  "computed_at": "<generated-at-runtime>"
+}

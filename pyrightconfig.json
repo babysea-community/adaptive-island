@@ -1,0 +1,7 @@
+{
+  "include": ["client/python/adaptive_island", "tests/python"],
+  "extraPaths": ["client/python"],
+  "pythonVersion": "3.10",
+  "typeCheckingMode": "standard",
+  "reportMissingTypeStubs": "none"
+}

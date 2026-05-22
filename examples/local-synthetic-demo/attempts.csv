@@ -1,0 +1,10 @@
+model,region,provider,outcome,latency_ms,estimated_cost,submitted_at,resolved_at
+black-forest-labs/flux-schnell,us,provider_a,used,6400,0.004,2026-05-06T00:00:00Z,2026-05-06T00:00:06Z
+black-forest-labs/flux-schnell,us,provider_a,failed,12000,0.004,2026-05-06T00:02:00Z,2026-05-06T00:02:12Z
+black-forest-labs/flux-schnell,us,provider_a,failed,11800,0.004,2026-05-06T00:04:00Z,2026-05-06T00:04:12Z
+black-forest-labs/flux-schnell,us,provider_b,used,4200,0.005,2026-05-06T00:00:30Z,2026-05-06T00:00:34Z
+black-forest-labs/flux-schnell,us,provider_b,used,4500,0.005,2026-05-06T00:02:30Z,2026-05-06T00:02:35Z
+black-forest-labs/flux-schnell,us,provider_b,used,4700,0.005,2026-05-06T00:04:30Z,2026-05-06T00:04:35Z
+black-forest-labs/flux-schnell,us,provider_c,used,9000,0.003,2026-05-06T00:01:00Z,2026-05-06T00:01:09Z
+black-forest-labs/flux-schnell,us,provider_c,discarded,9400,0.003,2026-05-06T00:03:00Z,2026-05-06T00:03:09Z
+black-forest-labs/flux-schnell,us,provider_c,used,8800,0.003,2026-05-06T00:05:00Z,2026-05-06T00:05:09Z

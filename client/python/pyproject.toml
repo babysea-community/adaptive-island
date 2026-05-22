@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "adaptive-island"
+version = "0.2.7"
+description = "Cache-first adaptive provider selection for Databricks, Supabase, and Upstash."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+authors = [{ name = "BabySea, Inc.", email = "dev@babysea.ai" }]
+keywords = ["databricks", "upstash", "supabase", "mlflow", "delta-lake", "routing", "ai", "inference", "provider-selection"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+  "redis>=5.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8",
+  "ruff>=0.5",
+  "pyright>=1.1",
+]
+
+[project.urls]
+Homepage = "https://github.com/babysea-community/adaptive-island"
+Documentation = "https://github.com/babysea-community/adaptive-island/tree/main/docs"
+Source = "https://github.com/babysea-community/adaptive-island"
+Issues = "https://github.com/babysea-community/adaptive-island/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["adaptive_island*"]

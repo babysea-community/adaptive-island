@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://adaptive-island.dev/schemas/ranking.v1.json",
+  "title": "CachedProviderRanking",
+  "description": "The Gold-layer ranking exported to Upstash and consumed by SDKs. Key shape: predictive:ranking:<region>:<model>.",
+  "type": "object",
+  "required": [
+    "providers_ranked",
+    "scores",
+    "attempts_total",
+    "window_hours",
+    "computed_at"
+  ],
+  "properties": {
+    "providers_ranked": {
+      "type": "array",
+      "description": "Providers ordered best-first for the given model and region.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "scores": {
+      "type": "object",
+      "description": "Provider score map. Higher is better; values may be negative because penalties are subtracted. Must include at least every provider listed in providers_ranked.",
+      "additionalProperties": {
+        "type": "number"
+      }
+    },
+    "attempts_total": {
+      "type": "integer",
+      "description": "Total attempts included in the ranking window for this model/region.",
+      "minimum": 0
+    },
+    "window_hours": {
+      "type": "integer",
+      "description": "Rolling window size used to compute the ranking.",
+      "minimum": 1
+    },
+    "computed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the Gold row that produced this cache value was computed."
+    }
+  },
+  "additionalProperties": false
+}

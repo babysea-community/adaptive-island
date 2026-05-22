@@ -1,0 +1,54 @@
+{
+  "name": "adaptive-island",
+  "version": "0.2.7",
+  "description": "Cache-first provider selection engine for multi-provider inference workloads. Built with Databricks, Supabase, and Upstash.",
+  "license": "Apache-2.0",
+  "author": "BabySea, Inc. <dev@babysea.ai>",
+  "homepage": "https://github.com/babysea-community/adaptive-island",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/babysea-community/adaptive-island.git",
+    "directory": "client/typescript"
+  },
+  "keywords": [
+    "babysea",
+    "open-source",
+    "primitive",
+    "databricks",
+    "supabase",
+    "upstash",
+    "ai-infrastructure",
+    "control-plane",
+    "execution-layer",
+    "developer-tools",
+    "generative-ai",
+    "inference-providers",
+    "adaptive-selection",
+    "provider-routing",
+    "model-routing",
+    "failover"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage --coverage.reporter=text --coverage.reporter=lcov",
+    "lint": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^4.1.5",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.5"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

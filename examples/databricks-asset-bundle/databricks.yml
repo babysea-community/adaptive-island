@@ -1,0 +1,133 @@
+# Databricks Asset Bundle for adaptive-island
+#
+# Deploys the full pipeline + jobs into a Databricks workspace:
+#
+#     databricks bundle deploy --target prod \
+#       --var cache_url_secret_scope=<scope> \
+#       --var cache_url_secret_key=<key>
+#
+# See ../../docs/deploy-on-databricks.md for the full guide.
+
+bundle:
+  name: adaptive-island
+
+# The pipeline/job/training files live above this folder. Extend
+# the sync root up to the repo root so the bundle can reference them
+# via ../../ paths.
+sync:
+  paths:
+    - ../..
+
+variables:
+  catalog:
+    description: Unity Catalog catalog where medallion and ML schemas live.
+    default: adaptive_island
+  region:
+    description: Region label written into Gold rows (e.g. us, eu, apac).
+    default: us
+  federation_connection:
+    description: Existing Lakehouse Federation catalog for your Supabase source.
+    default: adaptive_island_supabase_catalog
+  source_schema:
+    description: Source schema inside the federated catalog.
+    default: public
+  source_table:
+    description: Source table or view matching the provider_cost_log contract.
+    default: provider_cost_log
+  cache_url_secret_scope:
+    description: Databricks secret scope that stores the Upstash URL. The URL itself is never passed as a job parameter.
+  cache_url_secret_key:
+    description: Databricks secret key that stores the Upstash URL.
+  cache_tls:
+    description: Upstash TLS mode for the export job (auto, true, false). auto enables TLS for Upstash hosts.
+    default: auto
+  cache_ttl_seconds:
+    description: Cache TTL. Should be >= 2x the refresh cadence.
+    default: 172800   # 48 h
+  ranking_window_hours:
+    description: Rolling window (in hours) the Gold ranking is computed over.
+    default: "24"
+  min_train_rows:
+    description: Training is skipped if Silver has fewer rows than this. Raise in production.
+    default: "100"
+
+resources:
+  pipelines:
+    adaptive_island_pipeline:
+      name: adaptive-island-pipeline-${var.region}
+      catalog: ${var.catalog}
+      target: medallion
+      serverless: true
+      configuration:
+        spark.adaptive_island.federation_catalog: ${var.federation_connection}
+        spark.adaptive_island.source_schema: ${var.source_schema}
+        spark.adaptive_island.source_table: ${var.source_table}
+        spark.adaptive_island.region: ${var.region}
+        spark.adaptive_island.ranking_window_hours: ${var.ranking_window_hours}
+      libraries:
+        - file:
+            path: ../../pipelines/bronze_provider_attempts.py
+        - file:
+            path: ../../pipelines/silver_provider_attempts.py
+        - file:
+            path: ../../pipelines/gold_provider_ranking_by_model.py
+
+  jobs:
+    adaptive_island_export_rankings:
+      name: adaptive-island-export-rankings-${var.region}
+      schedule:
+        quartz_cron_expression: "0 30 2 * * ?"   # 02:30 UTC daily
+        timezone_id: UTC
+      tasks:
+        - task_key: refresh_pipeline
+          pipeline_task:
+            pipeline_id: ${resources.pipelines.adaptive_island_pipeline.id}
+        - task_key: export_to_cache
+          depends_on:
+            - task_key: refresh_pipeline
+          spark_python_task:
+            python_file: ../../jobs/export_rankings.py
+            parameters:
+              - "--catalog=${var.catalog}"
+              - "--region=${var.region}"
+              - "--cache-url-secret-scope=${var.cache_url_secret_scope}"
+              - "--cache-url-secret-key=${var.cache_url_secret_key}"
+              - "--cache-ttl-seconds=${var.cache_ttl_seconds}"
+              - "--cache-tls=${var.cache_tls}"
+          environment_key: default
+      environments:
+        - environment_key: default
+          spec:
+            client: "1"
+            dependencies:
+              - redis>=5.0
+
+    adaptive_island_train_model:
+      name: adaptive-island-train-model-${var.region}
+      schedule:
+        quartz_cron_expression: "0 0 3 * * ?"    # 03:00 UTC daily
+        timezone_id: UTC
+      tasks:
+        - task_key: train
+          spark_python_task:
+            python_file: ../../training/train.py
+            parameters:
+              - "--catalog=${var.catalog}"
+              - "--region=${var.region}"
+              - "--min-train-rows=${var.min_train_rows}"
+          environment_key: default
+      environments:
+        - environment_key: default
+          spec:
+            client: "1"
+            dependencies:
+              - mlflow>=2.13
+              - scikit-learn>=1.4
+              - pandas>=2.0
+
+targets:
+  dev:
+    mode: development
+    default: true
+  prod:
+    mode: production

@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://adaptive-island.dev/schemas/attempt.v1.json",
+  "title": "ProviderAttempt",
+  "description": "One operational provider-attempt row. Modeled after the documented BabySea Supabase provider_cost_log source shape.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "generation_id",
+    "model",
+    "provider",
+    "outcome",
+    "attempt_order",
+    "submitted_at"
+  ],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Database-generated provider_cost_log identity. SDK insert payloads may omit it; Databricks source tables/views must expose it for Bronze lineage.",
+      "minimum": 1
+    },
+    "schema_version": {
+      "const": "attempt.v1",
+      "description": "Always 'attempt.v1' for this schema. The Supabase table may omit this generated/export-only field."
+    },
+    "generation_id": {
+      "type": "string",
+      "description": "Stable workload/generation identifier shared by all attempts for the same request.",
+      "minLength": 1
+    },
+    "account_id": {
+      "type": ["string", "null"],
+      "description": "Optional tenant/account identifier. Keep region-local for sovereignty-sensitive deployments."
+    },
+    "provider": {
+      "type": "string",
+      "description": "Provider that was submitted to, e.g. replicate, fal, cloudflare.",
+      "minLength": 1
+    },
+    "provider_model_id": {
+      "type": ["string", "null"],
+      "description": "Provider-native model identifier, if different from the canonical model field."
+    },
+    "prediction_id": {
+      "type": ["string", "null"],
+      "description": "Provider job/prediction identifier used for reconciliation."
+    },
+    "model": {
+      "type": "string",
+      "description": "Canonical application model identifier, e.g. black-forest-labs/flux-schnell.",
+      "minLength": 1
+    },
+    "estimated_cost": {
+      "type": ["number", "null"],
+      "description": "Estimated or actual provider cost for this attempt in USD.",
+      "minimum": 0
+    },
+    "outcome": {
+      "type": "string",
+      "description": "Final operational outcome for the attempt.",
+      "enum": ["used", "cancelled", "discarded", "failed", "pending"]
+    },
+    "attempt_order": {
+      "type": "integer",
+      "description": "1 for the first provider tried, 2+ for failover attempts.",
+      "minimum": 1
+    },
+    "was_cancelled": {
+      "type": "boolean",
+      "default": false
+    },
+    "cancel_available": {
+      "type": "boolean",
+      "default": false
+    },
+    "submitted_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the provider attempt was submitted."
+    },
+    "resolved_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "When the provider attempt reached a terminal outcome. Null while pending."
+    },
+    "error_message": {
+      "type": ["string", "null"],
+      "description": "Sanitized coarse error message or class. Do not store provider secrets or raw request bodies."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Small operational metadata bag. Avoid PII and secrets.",
+      "additionalProperties": true,
+      "default": {}
+    }
+  },
+  "additionalProperties": false
+}

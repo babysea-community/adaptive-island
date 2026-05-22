@@ -1,0 +1,30 @@
+# Local dev stack for adaptive-island.
+# See README.md in this folder for usage.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_PASSWORD: adaptive
+      POSTGRES_DB: adaptive_island
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.13.0
+    command: mlflow server --host 0.0.0.0 --port 5000 --backend-store-uri sqlite:///mlflow.db --default-artifact-root /artifacts
+    ports:
+      - "5000:5000"
+    volumes:
+      - mlflow_artifacts:/artifacts
+
+volumes:
+  pgdata:
+  mlflow_artifacts:

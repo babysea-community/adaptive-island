@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# This root pyproject is intentionally minimal. The publishable Python
+# package lives under client/python/. This file exists so that:
+#   - `pytest` works from the repo root
+#   - `ruff` and `pyright` can be run with one command
+#   - contributors can `pip install -e .` to get the SDK on PYTHONPATH
+
+[project]
+name = "adaptive-island-workspace"
+version = "0.0.0"
+description = "Workspace meta-package for adaptive-island. Editable installs expose the Python SDK from client/python/."
+requires-python = ">=3.10"
+dependencies = [
+  "redis>=5.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8",
+  "ruff>=0.5",
+  "pyright>=1.1",
+]
+
+[tool.setuptools.packages.find]
+where = ["client/python"]
+include = ["adaptive_island*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["client/python", "training", "tests"]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = ["dist", "build", "examples/docker-compose-local"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E501"]

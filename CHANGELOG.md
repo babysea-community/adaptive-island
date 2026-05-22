@@ -4,6 +4,16 @@ All notable changes will be documented here. The format follows [Keep a Changelo
 
 ## Unreleased
 
+## [0.2.9] - 2026-05-22
+
+### Added
+
+- Added repository `codecov.yml` with GitHub Actions and CircleCI provider recognition, CI-gated Codecov status, pull request comment configuration, and TypeScript client path fixes.
+
+### Changed
+
+- Updated trusted Package Check Codecov uploads to pass `CODECOV_TOKEN` through the action environment and fail CI when coverage upload fails.
+
 ## [0.2.8] - 2026-05-22
 
 ### Changed

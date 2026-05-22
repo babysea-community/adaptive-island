@@ -29,11 +29,14 @@ jobs:
       - run: npm run lint
       - run: npm run test:coverage
       - name: Upload coverage reports to Codecov
-        if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
+        if: ${{ github.actor != 'dependabot[bot]' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
         uses: codecov/codecov-action@v6
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: client/typescript/coverage/lcov.info
+          fail_ci_if_error: true
       - run: npm run build
       - name: Local SDK demo
         run: node ../../examples/local-synthetic-demo/sdk-cache-demo.mjs

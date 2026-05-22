@@ -37,9 +37,9 @@
 
 <strong>Checks</strong>
 
-[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/2uTLcwc4naeNuKDP41es88/2J2hRNFoYs3zzDnuULUTR3/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/2uTLcwc4naeNuKDP41es88/2J2hRNFoYs3zzDnuULUTR3/tree/main)
-[![Snyk](https://img.shields.io/badge/security-snyk-4203B2?style=for-the-badge&logo=snyk&logoColor=white)](https://snyk.io/test/github/babysea-community/adaptive-island?targetFile=package.json)
+[![CircleCI](https://img.shields.io/badge/circleci-passed-003740?style=for-the-badge&logo=circleci&logoColor=white)](https://dl.circleci.com/status-badge/redirect/circleci/2uTLcwc4naeNuKDP41es88/2J2hRNFoYs3zzDnuULUTR3/tree/main)
 [![Codecov](https://img.shields.io/codecov/c/github/babysea-community/adaptive-island?style=for-the-badge&logo=codecov&logoColor=white&color=FF0077&token=agMk6Yntq6)](https://codecov.io/github/babysea-community/adaptive-island)
+[![Snyk](https://img.shields.io/github/actions/workflow/status/babysea-community/adaptive-island/snyk-security.yml?branch=main&style=for-the-badge&label=security&logo=snyk&logoColor=white)](https://github.com/babysea-community/adaptive-island/actions/workflows/snyk-security.yml)
 [![Sentry Check](https://img.shields.io/github/actions/workflow/status/babysea-community/adaptive-island/sentry-check.yml?style=for-the-badge&label=sentry+check&logo=sentry&logoColor=white)](https://github.com/babysea-community/adaptive-island/actions/workflows/sentry-check.yml)
 [![CodeQL](https://img.shields.io/github/actions/workflow/status/babysea-community/adaptive-island/codeql.yml?style=for-the-badge&label=codeql&logo=github&logoColor=white)](https://github.com/babysea-community/adaptive-island/actions/workflows/codeql.yml)
 [![Package Check](https://img.shields.io/github/actions/workflow/status/babysea-community/adaptive-island/publish-check.yml?style=for-the-badge&label=package+check&logo=npm&logoColor=white)](https://github.com/babysea-community/adaptive-island/actions/workflows/publish-check.yml)

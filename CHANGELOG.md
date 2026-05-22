@@ -4,6 +4,17 @@ All notable changes will be documented here. The format follows [Keep a Changelo
 
 ## Unreleased
 
+## [0.3.2] - 2026-05-22
+
+### Added
+
+- Added a Snyk Security workflow for Snyk Code SARIF upload, Open Source scanning and monitoring, and IaC reporting with `SNYK_TOKEN`.
+
+### Changed
+
+- Replaced the native CircleCI README badge with a Shields.io badge that matches the project badge style.
+- Replaced the static Snyk README badge with a realtime Snyk Security workflow status badge.
+
 ## [0.3.1] - 2026-05-22
 
 ### Added

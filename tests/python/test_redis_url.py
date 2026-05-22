@@ -2,7 +2,11 @@ from __future__ import annotations
 
 import sys
 
-from adaptive_island.selector import Selector, redis_url_for_tls
+from adaptive_island.selector import (
+    Selector,
+    redis_url_for_tls,
+    should_use_tls_for_cache_url,
+)
 
 
 def test_upstash_redis_url_is_normalized_to_redis() -> None:
@@ -34,3 +38,9 @@ def test_redis_from_url_does_not_receive_ssl_kwarg(monkeypatch) -> None:
             {"socket_connect_timeout": 0.5, "socket_timeout": 0.5},
         )
     ]
+
+
+def test_upstash_tls_detection_checks_hostname() -> None:
+    assert should_use_tls_for_cache_url("https://example.upstash.io/cache") is True
+    assert should_use_tls_for_cache_url("https://upstash.io/cache") is True
+    assert should_use_tls_for_cache_url("https://upstash.io.evil.example/cache") is False

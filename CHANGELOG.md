@@ -4,6 +4,11 @@ All notable changes will be documented here. The format follows [Keep a Changelo
 
 ## Unreleased
 
+### Fixed
+
+- Hardened Upstash cache URL host checks to parse hostnames before enabling trusted-host TLS behavior, resolving CodeQL URL substring alerts.
+- Replaced Sentry URL trailing-slash regex normalization with a bounded string scan to avoid CodeQL ReDoS noise.
+
 ## [0.3.4] - 2026-05-23
 
 ### Changed

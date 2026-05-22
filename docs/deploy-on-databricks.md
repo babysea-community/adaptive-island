@@ -154,9 +154,14 @@ Check cache without placing the secret URL in command arguments. Read the URL fr
 ADAPTIVE_ISLAND_CACHE_URL="$(your-secret-manager-read-command)" python - <<'PY'
 import os
 import redis
+from urllib.parse import urlparse
 
 url = os.environ["ADAPTIVE_ISLAND_CACHE_URL"]
-use_tls = url.startswith("redis://") or ".upstash.io" in url
+parsed = urlparse(url)
+hostname = (parsed.hostname or "").casefold().rstrip(".")
+use_tls = parsed.scheme == "redis" or hostname == "upstash.io" or hostname.endswith(
+  ".upstash.io"
+)
 if use_tls and url.startswith("redis://"):
   url = "redis://" + url[len("redis://"):]
 

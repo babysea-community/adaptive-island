@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import urllib.parse
 from datetime import UTC, datetime
 from typing import Literal
 
@@ -51,7 +52,11 @@ def _should_use_tls(cache_url: str, mode: Literal["auto", "true", "false"]) -> b
         return True
     if mode == "false":
         return False
-    return cache_url.startswith("redis://") or ".upstash.io" in cache_url
+    parsed = urllib.parse.urlparse(cache_url)
+    hostname = (parsed.hostname or "").casefold().rstrip(".")
+    return parsed.scheme == "redis" or hostname == "upstash.io" or hostname.endswith(
+        ".upstash.io"
+    )
 
 
 def _redis_url_for_tls(cache_url: str, use_tls: bool) -> str:

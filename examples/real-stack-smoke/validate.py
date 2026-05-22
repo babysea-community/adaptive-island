@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "client" / "python"))
 
 from adaptive_island import Selector  # noqa: E402
-from adaptive_island.selector import redis_url_for_tls  # noqa: E402
+from adaptive_island.selector import redis_url_for_tls, should_use_tls_for_cache_url  # noqa: E402
 
 
 class SmokeError(RuntimeError):
@@ -349,7 +349,7 @@ def validate_upstash(
         raise SmokeError("install redis>=5.0 to validate Upstash") from exc
 
     cache_url = _env("ADAPTIVE_ISLAND_CACHE_URL")
-    use_tls = cache_url.startswith("redis://") or ".upstash.io" in cache_url
+    use_tls = should_use_tls_for_cache_url(cache_url)
     client = redis.from_url(
         redis_url_for_tls(cache_url, use_tls),
         socket_connect_timeout=10,

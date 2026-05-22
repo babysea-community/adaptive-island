@@ -15,6 +15,7 @@ import json
 import logging
 import math
 import os
+import urllib.parse
 from collections.abc import Sequence
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -28,6 +29,14 @@ def redis_url_for_tls(url: str, use_tls: bool) -> str:
     if use_tls and url.startswith("redis://"):
         return "redis://" + url[len("redis://") :]
     return url
+
+
+def should_use_tls_for_cache_url(url: str) -> bool:
+    parsed = urllib.parse.urlparse(url)
+    hostname = (parsed.hostname or "").casefold().rstrip(".")
+    return parsed.scheme == "redis" or hostname == "upstash.io" or hostname.endswith(
+        ".upstash.io"
+    )
 
 
 @dataclass(frozen=True)
@@ -87,7 +96,7 @@ class Selector:
         try:
             import redis
 
-            use_tls = url.startswith("redis://") or ".upstash.io" in url
+            use_tls = should_use_tls_for_cache_url(url)
             return redis.from_url(
                 redis_url_for_tls(url, use_tls),
                 socket_connect_timeout=cache_socket_timeout_seconds,

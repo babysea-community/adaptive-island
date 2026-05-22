@@ -4,6 +4,8 @@ All notable changes will be documented here. The format follows [Keep a Changelo
 
 ## Unreleased
 
+## [0.3.0] - 2026-05-22
+
 ### Added
 
 - Added a CircleCI package-check workflow for adaptive-island TypeScript lint/coverage/build/package validation, Python pytest/ruff validation, and trusted `main` Codecov CLI upload when `CODECOV_TOKEN` is configured in CircleCI.

@@ -3,4 +3,4 @@
 from .selector import Selector
 
 __all__ = ["Selector"]
-__version__ = "0.3.3"
+__version__ = "0.3.4"

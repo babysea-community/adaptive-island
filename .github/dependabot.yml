@@ -1,28 +1,21 @@
 version: 2
 updates:
-  - package-ecosystem: "pip"
-    directory: "/"
+  - package-ecosystem: 'pip'
+    directory: '/'
     schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 5
-    labels:
-      - "dependencies"
-      - "security"
+      interval: 'weekly'
 
-  - package-ecosystem: "pip"
-    directory: "/client/python"
+  - package-ecosystem: 'pip'
+    directory: '/client/python'
     schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 5
-    labels:
-      - "dependencies"
-      - "security"
+      interval: 'weekly'
 
-  - package-ecosystem: "npm"
-    directory: "/client/typescript"
+  - package-ecosystem: 'npm'
+    directory: '/client/typescript'
     schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 5
-    labels:
-      - "dependencies"
-      - "security"
+      interval: 'daily'
+
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'

@@ -36,8 +36,8 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: client/typescript/coverage/lcov.info
-          disable_search: true
           fail_ci_if_error: true
+          disable_search: true
       - run: npm run build
       - name: Local SDK demo
         run: node ../../examples/local-synthetic-demo/sdk-cache-demo.mjs
@@ -55,5 +55,5 @@ jobs:
           cache: pip
       - run: python -m pip install --upgrade pip
       - run: python -m pip install -e '.[dev]'
-      - run: pytest tests/python
       - run: ruff check .
+      - run: pytest tests/python

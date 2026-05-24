@@ -79,11 +79,11 @@ jobs:
           paths:
             - ~/.cache/pip
       - run:
-          name: Python tests
-          command: pytest tests/python
-      - run:
           name: Python lint
           command: ruff check .
+      - run:
+          name: Python tests
+          command: pytest tests/python
 
 workflows:
   package-check:

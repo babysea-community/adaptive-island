@@ -4,6 +4,14 @@ All notable changes will be documented here. The format follows [Keep a Changelo
 
 ## Unreleased
 
+## [0.3.6] - 2026-05-24
+
+### Changed
+
+- Reordered Python CI steps in GitHub Actions (`publish-check.yml`) and CircleCI (`config.yml`) to run `ruff check` before `pytest`, matching the lint-before-test convention followed by the TypeScript jobs.
+
+## [0.3.5] - 2026-05-23
+
 ### Fixed
 
 - Hardened Upstash cache URL host checks to parse hostnames before enabling trusted-host TLS behavior, resolving CodeQL URL substring alerts.

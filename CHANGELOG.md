@@ -4,6 +4,13 @@ All notable changes will be documented here. The format follows [Keep a Changelo
 
 ## Unreleased
 
+## [0.3.7] - 2026-05-25
+
+### Added
+
+- Added a GitLab CI pipeline for TypeScript lint, coverage, build, package validation, Python lint/tests, dependency audit, secret scanning, Code Quality, SAST, and Dependency Scanning.
+- Added GitLab Codecov provider recognition, Cobertura coverage output, and a README GitLabCI badge.
+
 ## [0.3.6] - 2026-05-24
 
 ### Changed

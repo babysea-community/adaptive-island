@@ -1,10 +1,10 @@
 {
   "name": "adaptive-island",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "Cache-first provider selection engine for multi-provider inference workloads. Built with Databricks, Supabase, and Upstash.",
   "license": "Apache-2.0",
   "author": "BabySea, Inc. <dev@babysea.ai>",
-  "homepage": "https://github.com/babysea-community/adaptive-island",
+  "homepage": "https://babysea.ai/blog/how-babysea-built-adaptive-provider-selection-on-databricks",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/babysea-community/adaptive-island.git",
@@ -36,7 +36,7 @@
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts --clean",
     "test": "vitest run",
-    "test:coverage": "vitest run --coverage --coverage.reporter=text --coverage.reporter=lcov",
+    "test:coverage": "vitest run --coverage --coverage.reporter=text --coverage.reporter=lcov --coverage.reporter=cobertura",
     "lint": "tsc --noEmit"
   },
   "devDependencies": {

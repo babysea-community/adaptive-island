@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "adaptive-island"
-version = "0.3.6"
+version = "0.3.7"
 description = "Cache-first adaptive provider selection for Databricks, Supabase, and Upstash."
 readme = "README.md"
 requires-python = ">=3.10"

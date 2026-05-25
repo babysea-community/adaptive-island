@@ -4,6 +4,14 @@ All notable changes will be documented here. The format follows [Keep a Changelo
 
 ## Unreleased
 
+## [0.3.8] - 2026-05-25
+
+### Changed
+
+- Standardized `SECURITY.md` to the shared primitive structure: Title Case heading, canonical section order (Supported versions → Reporting a vulnerability → Sentry code guard → Runtime posture → Security model → Secret handling → Operational guardrails → Incident response → Data handling), and unified heading wording (`Reporting a vulnerability`, `Runtime posture`, `Security model`, `Data handling`).
+- Reordered `CONTRIBUTING.md` so `Documentation standard` sits directly after `Contribution guidelines` and before `Development flow`, matching `ledger-fortress` and `rosetta-bridge`.
+- Added a `## Scope` section to `AGENTS.md` describing the supported stack, BabySea production lineage, exclusions, and naming, matching the other primitives.
+
 ## [0.3.7] - 2026-05-25
 
 ### Added

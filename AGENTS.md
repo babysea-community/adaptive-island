@@ -5,6 +5,13 @@ See [README.md](README.md) for the full story. This primitive is grounded in Bab
 
 This file mirrors the README so deploys, IDEs, and tooling that read `AGENTS.md` see the same context.
 
+## Scope
+
+- **Supported OSS stack:** Databricks (Lakehouse Federation, Lakeflow, Delta, Unity Catalog, optional MLflow) + Supabase attempt source + Upstash serving cache + TypeScript/Python SDKs.
+- **Inspired by BabySea production:** offline Bronze/Silver/Gold ranking ➜ Upstash cache export ➜ cache-first runtime with deterministic fail-open fallback.
+- **Not included:** request-path Databricks calls, stochastic routing, propensity logging, IPS/SNIPS promotion gates, hosted provider clients, billing, telemetry, or private provider catalogs.
+- **Naming:** BabySea production reads `provider_cost_log`; this OSS keeps the same column shape and uses `attempt.v1` / `ranking.v1` as the public schemas.
+
 ## Layout
 
 | Path | Purpose |

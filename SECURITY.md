@@ -1,22 +1,28 @@
-# Security policy
-
-## Reporting vulnerabilities
-
-Please report vulnerabilities privately through GitHub's **Report a vulnerability** flow on the public `babysea-community/adaptive-island` repository. If that flow is unavailable, contact the maintainers at `dev@babysea.ai`.
-
-Do not open public issues for suspected vulnerabilities, exposed secrets, private attempt logs, customer metadata, provider credentials, or deployment details that include sensitive information.
+# Security Policy
 
 ## Supported versions
 
 `adaptive-island` is a production-grade OSS primitive for the supported Databricks + Supabase + Upstash stack. Security fixes target the latest public release and the `main` branch.
 
-## Runtime security model
+## Reporting a vulnerability
+
+Please report vulnerabilities privately through GitHub's **Report a vulnerability** flow on the public `babysea-community/adaptive-island` repository. If that flow is unavailable, contact the maintainers at `dev@babysea.ai`.
+
+Do not open public issues for suspected vulnerabilities, exposed secrets, private attempt logs, customer metadata, provider credentials, or deployment details that include sensitive information.
+
+## Sentry code guard
+
+The public OSS repository is connected to a private, repository-specific Sentry project for repository ownership, Seer-assisted review, and issue routing. The Sentry organization slug and project slug are intentionally not committed to this public repo.
+
+This repo keeps Sentry as a repository guardrail, not runtime telemetry. It ships `scripts/sentry-project-check.mjs` and a scheduled `Sentry Project Check` workflow that verifies the configured project slug, active status, `other` platform, and Code Guard ownership rules. The workflow uses GitHub Actions secrets. Local runs may read ignored `.sentryclirc` defaults for org/project/url, but `SENTRY_AUTH_TOKEN` must stay in an environment variable or secret store. No Sentry SDK, DSN, tracing, or runtime telemetry is included in this package.
+
+## Runtime posture
 
 `adaptive-island` keeps Databricks off the request path. Request-time code reads one Upstash key and must fail open to the caller-provided fallback order when the cache is missing, malformed, stale, disabled, or unavailable.
 
 Supabase is the operational source for attempt rows, Databricks is the offline learning path, and Upstash is the serving cache. The cache payload contains provider IDs, scores, attempt counts, window size, and `computed_at`; it must not contain provider credentials, raw prompts, request bodies, generated media, or customer PII.
 
-## Security ownership matrix
+## Security model
 
 | Surface              | Boundary in adaptive-island                                                                   | Operator responsibility                                                                 |
 | :------------------- | :-------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------- |
@@ -27,12 +33,6 @@ Supabase is the operational source for attempt rows, Databricks is the offline l
 | Schemas              | `attempt.v1` and `ranking.v1` are the public data contracts.                                   | Publish breaking changes as new schema versions instead of mutating v1.                  |
 | Repository guardrail | Sentry Project Check validates repository-specific Sentry code-guard wiring only.              | Keep `SENTRY_AUTH_TOKEN` in CI secrets and keep ownership rules configured.              |
 | Supply chain         | Package Check validates TS lint/coverage/build/local demo/package dry-run plus Python pytest/ruff; CodeQL scans TS/Python and Codecov uploads TS coverage. | Keep checks green and review dependency updates before production deployment.            |
-
-## Sentry code guard
-
-The public OSS repository is connected to a private, repository-specific Sentry project for repository ownership, Seer-assisted review, and issue routing. The Sentry organization slug and project slug are intentionally not committed to this public repo.
-
-This repo keeps Sentry as a repository guardrail, not runtime telemetry. It ships `scripts/sentry-project-check.mjs` and a scheduled `Sentry Project Check` workflow that verifies the configured project slug, active status, `other` platform, and Code Guard ownership rules. The workflow uses GitHub Actions secrets. Local runs may read ignored `.sentryclirc` defaults for org/project/url, but `SENTRY_AUTH_TOKEN` must stay in an environment variable or secret store. No Sentry SDK, DSN, tracing, or runtime telemetry is included in this package.
 
 ## Secret handling
 
@@ -86,7 +86,7 @@ For suspected key exposure, cache poisoning, source-log leakage, regional data d
 5. Delete or overwrite only smoke-scoped cache keys during investigation unless you are intentionally restoring a production key from a known-good export.
 6. Open a private vulnerability report if the issue affects the public primitive, not only one private deployment.
 
-## Data minimization
+## Data handling
 
 - Attempt logs should store provider, model, outcome, timing, cost, cancellation state, and bounded metadata needed for routing quality.
 - Avoid storing raw prompts, generated media URLs, customer PII, or provider secrets in the attempt log.

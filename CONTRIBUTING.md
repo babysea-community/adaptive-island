@@ -14,6 +14,30 @@ Adaptive Island is a fail-open provider-ranking primitive extracted from BabySea
 - Keep the TypeScript and Python SDK behavior in sync when changing selector logic or payload contracts.
 - Prefer focused changes. Avoid unrelated refactors in SDK code, schemas, bundle config, or deployment docs.
 
+## Documentation standard
+
+Adaptive Island docs are part of the public runtime contract. Keep them factual, operator-ready, and tied to behavior that exists in this repository.
+
+- Start from the README contract: what the primitive is, what it is not, how to deploy it, how to validate it, and how to recover it.
+- Use exact environment variable names, bundle variables, cache key shapes, schema names, commands, and file paths.
+- Keep the stack boundary explicit: production docs use Databricks, Supabase, and Upstash. PostgreSQL and Redis appear only for Lakehouse Federation, Supabase-compatible endpoints, Upstash's Redis protocol, or local stand-ins.
+- Document validation steps beside operational claims. If a guide says a path is production-ready, include the check, workflow, or smoke harness that proves it.
+- Keep security guidance concrete: where secrets live, which values must not be logged, how keys are rotated, and what should never be posted publicly.
+- Update `CHANGELOG.md` for user-visible docs, configuration, security, SDK behavior, schema, deployment, or operations changes.
+- Avoid roadmap language in the public contract. New features stay out of README claims until implemented, documented, and validated for this stack.
+
+When a change touches these areas, review the matching docs before opening a PR:
+
+| Change area                    | Required docs to review                                                  |
+| :----------------------------- | :----------------------------------------------------------------------- |
+| SDK ranking or fail-open logic | README runtime flow, `docs/testing-failure-modes.md`, client READMEs     |
+| Cache payload or key shape     | README cache section, `schemas/ranking.v1.json`, export job docs         |
+| Attempt-log source contract    | README quick start, `docs/data-contract.md`, adapter and Supabase examples |
+| Databricks bundle variables    | README production readiness, `docs/deploy-on-databricks.md`, bundle README |
+| Scoring formula or window      | README architecture, `docs/scoring-config.md`, `docs/evaluation-metrics.md` |
+| Sentry or CI workflows         | README production readiness, `SECURITY.md`, this contributing guide       |
+| Security or secret handling    | README production readiness, `SECURITY.md`, real-stack smoke docs         |
+
 ## Development flow
 
 ### Python SDK
@@ -58,30 +82,6 @@ cd client/typescript && npm run lint && npm run test:coverage && npm run build
 ```
 
 If you touched schemas, examples, bundle config, or docs, validate the relevant examples and generated artifacts before opening the PR.
-
-## Documentation standard
-
-Adaptive Island docs are part of the public runtime contract. Keep them factual, operator-ready, and tied to behavior that exists in this repository.
-
-- Start from the README contract: what the primitive is, what it is not, how to deploy it, how to validate it, and how to recover it.
-- Use exact environment variable names, bundle variables, cache key shapes, schema names, commands, and file paths.
-- Keep the stack boundary explicit: production docs use Databricks, Supabase, and Upstash. PostgreSQL and Redis appear only for Lakehouse Federation, Supabase-compatible endpoints, Upstash's Redis protocol, or local stand-ins.
-- Document validation steps beside operational claims. If a guide says a path is production-ready, include the check, workflow, or smoke harness that proves it.
-- Keep security guidance concrete: where secrets live, which values must not be logged, how keys are rotated, and what should never be posted publicly.
-- Update `CHANGELOG.md` for user-visible docs, configuration, security, SDK behavior, schema, deployment, or operations changes.
-- Avoid roadmap language in the public contract. New features stay out of README claims until implemented, documented, and validated for this stack.
-
-When a change touches these areas, review the matching docs before opening a PR:
-
-| Change area                    | Required docs to review                                                  |
-| :----------------------------- | :----------------------------------------------------------------------- |
-| SDK ranking or fail-open logic | README runtime flow, `docs/testing-failure-modes.md`, client READMEs     |
-| Cache payload or key shape     | README cache section, `schemas/ranking.v1.json`, export job docs         |
-| Attempt-log source contract    | README quick start, `docs/data-contract.md`, adapter and Supabase examples |
-| Databricks bundle variables    | README production readiness, `docs/deploy-on-databricks.md`, bundle README |
-| Scoring formula or window      | README architecture, `docs/scoring-config.md`, `docs/evaluation-metrics.md` |
-| Sentry or CI workflows         | README production readiness, `SECURITY.md`, this contributing guide       |
-| Security or secret handling    | README production readiness, `SECURITY.md`, real-stack smoke docs         |
 
 ## Issue triage
 

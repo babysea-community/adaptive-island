@@ -4,6 +4,10 @@ All notable changes will be documented here. The format follows [Keep a Changelo
 
 ## Unreleased
 
+### Changed
+
+- Raised the TypeScript client package engine and documented runtime floor to Node.js 22+, with the client lockfile refreshed after reinstall.
+
 ## [0.3.9] - 2026-05-25
 
 ### Added

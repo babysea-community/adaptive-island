@@ -120,11 +120,12 @@ BabySea OSS projects are published into three status levels:
     - [Secret rotation](#secret-rotation)
     - [Troubleshooting](#troubleshooting)
 9. [Version surface](#9-version-surface)
-10. [Community](#10-community)
+10. [Security and Compliance](#10-security-and-compliance)
+11. [Community](#11-community)
     - [Who's using it](#whos-using-it)
     - [Related projects](#related-projects)
     - [Contributing](#contributing)
-11. [License](#11-license)
+12. [License](#12-license)
 
 ---
 
@@ -555,7 +556,19 @@ Current version surface:
 
 New features stay out of the public contract until they are implemented, documented, and validated against this stack.
 
-## 10. Community
+## 10. Security and Compliance
+
+Adaptive Island publishes its trust signals through public GitLab and GitHub checks so contributors can inspect the actual CI configuration, jobs, and reports.
+
+| Signal | Coverage |
+| :----- | :------- |
+| GitLab application security | SAST, Advanced SAST, IaC scanning, Dependency Scanning, Secret Detection, Code Quality, guarded Container Scanning, package audit, and redacted Gitleaks. |
+| License compliance | Dependency license inventory is reviewed against [LICENSES.md](LICENSES.md); approval policies are deferred until the GitLab group has enough eligible reviewers. |
+| Repository guards | GitHub CodeQL, Package Check, Sentry Project Check, CircleCI, and Codecov stay public for cross-provider verification. |
+
+Container scanning is present in CI but only runs when `CS_IMAGE` is configured for a repository that publishes a container image.
+
+## 11. Community
 
 ### Who's using it
 
@@ -573,6 +586,6 @@ New features stay out of the public contract until they are implemented, documen
 
 We welcome PRs, issues, and design discussion. See [`CONTRIBUTING.md`](CONTRIBUTING.md), [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md), and [`SECURITY.md`](SECURITY.md).
 
-## 11. License
+## 12. License
 
 [Apache License 2.0](LICENSE). Use it, fork it, ship it. Just keep the notice.

@@ -4,9 +4,14 @@ All notable changes will be documented here. The format follows [Keep a Changelo
 
 ## Unreleased
 
+### Added
+
+- Added `LICENSES.md` and a README security/compliance section documenting public GitLab and GitHub trust signals.
+
 ### Changed
 
 - Raised the TypeScript client package engine and documented runtime floor to Node.js 22+, with the client lockfile refreshed after reinstall.
+- Standardized GitLab application security coverage with SAST-IaC, guarded Container Scanning, shared security variables, and license-compliance documentation.
 
 ## [0.3.9] - 2026-05-25
 

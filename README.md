@@ -560,11 +560,11 @@ New features stay out of the public contract until they are implemented, documen
 
 Adaptive Island publishes its trust signals through public GitLab and GitHub checks so contributors can inspect the actual CI configuration, jobs, and reports.
 
-| Signal | Coverage |
-| :----- | :------- |
-| GitLab application security | SAST, Advanced SAST, IaC scanning, Dependency Scanning, Secret Detection, Code Quality, guarded Container Scanning, package audit, and redacted Gitleaks. |
-| License compliance | Dependency license inventory is reviewed against [LICENSES.md](LICENSES.md); approval policies are deferred until the GitLab group has enough eligible reviewers. |
-| Repository guards | GitHub CodeQL, Package Check, Sentry Project Check, CircleCI, and Codecov stay public for cross-provider verification. |
+| Signal                      | Coverage                                                                                                                                                          |
+| :-------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| GitLab application security | SAST, Advanced SAST, IaC scanning, Dependency Scanning, Secret Detection, Code Quality, guarded Container Scanning, package audit, and redacted Gitleaks.         |
+| License compliance          | Dependency license inventory is reviewed against [LICENSES.md](LICENSES.md); approval policies are deferred until the GitLab group has enough eligible reviewers. |
+| Repository guards           | GitHub CodeQL, Package Check, Sentry Project Check, CircleCI, and Codecov stay public for cross-provider verification.                                            |
 
 Container scanning is present in CI but only runs when `CS_IMAGE` is configured for a repository that publishes a container image.
 

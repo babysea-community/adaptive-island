@@ -1,26 +1,18 @@
 <div align="center">
 
-<p>
-  <img src="public/icon.png" width="120" alt="Adaptive Island icon" />
-</p>
+<img src="public/icon.png" width="120" alt="Adaptive Island icon" />
 
-<h1>
-  Adaptive Island
-</h1>
+# Adaptive Island
 
-<p>
-  Cache-first provider selection engine for multi-provider inference workloads. Built with Databricks, Supabase, and Upstash.
-</p>
+Cache-first provider selection engine for multi-provider inference workloads. Built with Databricks, Supabase, and Upstash.
 
-<p>
-  <strong>Every workload makes the next workload smarter</strong>
-</p>
+### Every workload makes the next workload smarter
 
 <br />
 
 <strong>Project details</strong>
 
-[![BabySea Blog](https://custom-icon-badges.demolab.com/badge/babysea-blog-0D9488?style=for-the-badge&logo=babysea&logoColor=white)](https://babysea.ai/blog/how-babysea-built-adaptive-provider-selection-on-databricks)
+[![BabySea Blog](https://custom-icon-badges.demolab.com/badge/read-blog-0D9488?style=for-the-badge&logo=babysea&logoColor=white)](https://babysea.ai/blog/how-babysea-built-adaptive-provider-selection-on-databricks)
 [![BabySea OSS Primitive](https://custom-icon-badges.demolab.com/badge/oss-primitive-EA580c?style=for-the-badge&logo=babysea&logoColor=white)](#babysea-oss-taxonomy)
 [![BabySea OSS Status Production](https://custom-icon-badges.demolab.com/badge/oss_status-production-C026D3?style=for-the-badge&logo=babysea&logoColor=white)](#status)
 [![License](https://custom-icon-badges.demolab.com/badge/license-apache_2.0-059669?style=for-the-badge&logo=apache&logoColor=white)](LICENSE)

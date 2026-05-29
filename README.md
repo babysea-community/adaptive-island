@@ -4,7 +4,7 @@
 
 # Adaptive Island
 
-Cache-first provider selection engine for multi-provider inference workloads. Built with Databricks, Supabase, and Upstash.
+Cache-first provider selection engine for multi-provider inference workloads.
 
 ### Every workload makes the next workload smarter
 
@@ -75,7 +75,7 @@ BabySea OSS projects are published into three status levels:
 | **Production** | Working plus a hardened public runtime contract. Validated against a stated infrastructure stack with deterministic behavior, explicit failure modes, and a documented upgrade path. |
 | **Alpha**      | Early-stage implementation. Core structure exists but some capabilities may be incomplete, undocumented, or subject to breaking changes. Not recommended for production deployments. |
 
-`adaptive-island` is a **production** OSS primitive. It packages the BabySea-style provider-ranking loop for community deployments that use Supabase as the operational source, Databricks as the offline learning path, and Upstash as the request-path cache. See [`CHANGELOG.md`](CHANGELOG.md).
+See [`CHANGELOG.md`](CHANGELOG.md) to track releases and public contract changes.
 
 ## Table of contents
 

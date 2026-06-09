@@ -1,95 +1,68 @@
-# Security Policy
+# Security policy
 
-## Supported versions
+This project is a public BabySea OSS repository. Its security boundary, runtime model, supported deployment mode, and expected validation steps are defined in [README.md](README.md).
 
-`adaptive-island` is a production-grade OSS primitive for the supported Databricks + Supabase + Upstash stack. Security fixes target the latest public release and the `main` branch.
+## Reporting vulnerabilities
 
-## Reporting a vulnerability
+Please report vulnerabilities privately through GitHub's **Report a vulnerability** flow on this project's public repository. If that flow is unavailable, contact the maintainers at `dev@babysea.ai`.
 
-Please report vulnerabilities privately through GitHub's **Report a vulnerability** flow on the public `babysea-community/adaptive-island` repository. If that flow is unavailable, contact the maintainers at `dev@babysea.ai`.
+Do not open public issues for suspected vulnerabilities or exposed secrets.
 
-Do not open public issues for suspected vulnerabilities, exposed secrets, private attempt logs, customer metadata, provider credentials, or deployment details that include sensitive information.
+Useful reports include the affected route, package, workflow, file, command, schema, or deployment mode; reproduction steps; expected impact; and whether any secret, private data, prompt, generated media, or signed URL may have been exposed. Do not include real API keys, private prompts, reference media, generated media, customer data, signed URLs, or exploit payloads in public spaces.
 
-## Sentry code guard
+## What to report
 
-The public OSS repository is connected to a private, repository-specific Sentry project for repository ownership, Seer-assisted review, and issue routing. The Sentry organization slug and project slug are intentionally not committed to this public repo.
+Please report issues such as:
 
-This repo keeps Sentry as a repository guardrail, not runtime telemetry. It ships `scripts/sentry-project-check.mjs` and a scheduled `Sentry Project Check` workflow that verifies the configured project slug, active status, `other` platform, and Code Guard ownership rules. The workflow uses GitHub Actions secrets. Local runs may read ignored `.sentryclirc` defaults for org/project/url, but `SENTRY_AUTH_TOKEN` must stay in an environment variable or secret store. No Sentry SDK, DSN, tracing, or runtime telemetry is included in this package.
-
-## Runtime posture
-
-`adaptive-island` keeps Databricks off the request path. Request-time code reads one Upstash key and must fail open to the caller-provided fallback order when the cache is missing, malformed, stale, disabled, or unavailable.
-
-Supabase is the operational source for attempt rows, Databricks is the offline learning path, and Upstash is the serving cache. The cache payload contains provider IDs, scores, attempt counts, window size, and `computed_at`; it must not contain provider credentials, raw prompts, request bodies, generated media, or customer PII.
-
-## Security model
-
-| Surface              | Boundary in adaptive-island                                                                   | Operator responsibility                                                                 |
-| :------------------- | :-------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------- |
-| Supabase source      | `provider_cost_log` or adapter view stores provider attempts consumed through Lakehouse Federation. | Keep RLS/role access tight, minimize metadata, and configure backups/retention.          |
-| Databricks learning  | Lakehouse Federation, Lakeflow, Delta, Unity Catalog, and optional MLflow training run offline. | Grant read-only source access, isolate catalogs by region, and protect workspace tokens. |
-| Upstash cache        | `predictive:ranking:<region>:<model>` stores the runtime ranking artifact.                     | Store URLs/tokens in secret managers and monitor TTL, freshness, and key ownership.      |
-| SDK runtime          | TypeScript/Python SDKs validate cache payloads and fail open to fallback.                      | Always pass deterministic fallback providers and track decision source.                  |
-| Schemas              | `attempt.v1` and `ranking.v1` are the public data contracts.                                   | Publish breaking changes as new schema versions instead of mutating v1.                  |
-| Repository guardrail | Sentry Project Check validates repository-specific Sentry code-guard wiring only.              | Keep `SENTRY_AUTH_TOKEN` in CI secrets and keep ownership rules configured.              |
-| Supply chain         | Package Check validates TS lint/coverage/build/local demo/package dry-run plus Python pytest/ruff; CodeQL scans TS/Python and Codecov uploads TS coverage. | Keep checks green and review dependency updates before production deployment.            |
+- Authentication, authorization, tenancy, or scope bypass.
+- Exposure of provider credentials, platform tokens, database secrets, webhook secrets, callback secrets, npm tokens, GitHub or GitLab tokens, Sentry tokens, signing keys, or other deployment secrets.
+- Webhook signature bypass, replay, or delivery deduplication failures.
+- Unsafe callback signing, callback payload tampering, or untrusted redirect behavior.
+- Cross-user disclosure of prompts, reference media, generated media, request metadata, logs, account data, or private operational details.
+- Server-side request forgery, unsafe URL handling, path traversal, command injection, template injection, or unsafe file handling.
+- Provider-mode, region, endpoint, or adapter confusion that could send data to the wrong external service or leak raw provider parameters.
+- Supply-chain issues involving dependencies, generated artifacts, CI workflows, release scripts, or package contents.
 
 ## Secret handling
 
-- Keep Databricks personal access tokens, Supabase database credentials, and Upstash URLs in secret managers or deployment environment variables.
-- Store Databricks cache URLs in secret scopes; do not hard-code them in bundle files, notebooks, or exported job definitions.
-- Do not log Upstash URLs, Supabase passwords, Databricks tokens, provider API keys, or raw customer prompts.
-- Keep `SENTRY_AUTH_TOKEN` in GitHub Actions secrets or an environment-backed secret manager. Do not put tokens in `.sentryclirc`.
-- Keep non-token Sentry defaults such as org, project, and URL in GitHub Actions secrets or ignored local config when local checks need them.
-- The real-stack smoke harness prints sanitized identifiers/counts only; treat its optional result file as operational evidence and review it before sharing.
+- Use `.env.example` as the source of truth for runtime, build, CI, provider, webhook, callback, cron, rate-limit, analytics, and monitoring variables when this project has environment configuration.
+- Keep every secret server-side unless `.env.example` explicitly marks the value as public.
+- Keep provider keys, deployment tokens, database credentials, webhook secrets, signed URLs, private prompts, private media, and customer data out of logs, screenshots, chats, issues, pull requests, fixtures, generated files, and package artifacts.
+- Treat provider region, base URL, model routing, storage, queue, and integration settings as deployment configuration unless [README.md](README.md) intentionally documents them as public behavior.
+- Rotate any key that appears in logs, screenshots, chats, issues, pull requests, deployment output, CI artifacts, or generated package contents.
 
-## Operational guardrails
+## Runtime boundary
 
-Before production deployment, run the relevant package checks from the adaptive-island project:
+This file is intentionally project-neutral. The exact runtime boundary depends on the project type:
 
-```bash
-python -m pytest tests/python
-python -m ruff check .
-python -m pyright
-cd client/typescript
-npm run lint
-npm run test:coverage
-npm run build
-node ../../examples/local-synthetic-demo/sdk-cache-demo.mjs
-```
+| Project type | Security focus                                                                                   |
+| :----------- | :----------------------------------------------------------------------------------------------- |
+| SDK          | Package contents, exported API contract, dependency surface, local data handling, and examples.  |
+| Primitive    | Infrastructure boundary, data contracts, operational credentials, storage, queues, and services. |
+| Starter      | Application auth, route handlers, public environment values, webhooks, callbacks, and deploys.   |
+| Docs         | Public content, examples, links, generated artifacts, and secret-free publishing workflows.      |
 
-For Databricks deployment changes, also run:
+Follow [README.md](README.md), [CONTRIBUTING.md](CONTRIBUTING.md), and any project-specific [AGENTS.md](AGENTS.md) for the concrete boundary.
 
-```bash
-cd examples/databricks-asset-bundle
-databricks bundle validate --target prod \
-  --var cache_url_secret_scope=adaptive-island-prod \
-  --var cache_url_secret_key=upstash-cache-url
-```
+## Public disclosure rules
 
-Before first production traffic in a region, run the real-stack smoke harness with Databricks, Supabase, and Upstash credentials from a secret manager:
+- Do not post vulnerability details publicly until maintainers have confirmed a fix or disclosure plan.
+- Do not include exploit payloads that could be immediately reused against public deployments.
+- Do not include real secrets, private URLs, private prompts, private reference media, generated media, customer data, or logs containing personal data.
+- Use private maintainer channels when a reproduction requires sensitive material.
 
-```bash
-python examples/real-stack-smoke/validate.py
-```
+## Operational hardening
 
-The public Package Check workflow runs TypeScript lint/coverage/build/local demo/package dry-run, uploads TypeScript coverage to Codecov, and runs Python pytest/ruff. CodeQL scans JavaScript/TypeScript and Python. The Sentry Project Check workflow validates repository guardrail wiring.
+- Run the validation commands documented in [README.md](README.md) before deploys, releases, and security-sensitive changes.
+- Keep public environment variables limited to values that are safe for browsers or public clients.
+- Prefer scoped credentials, least-privilege tokens, short-lived keys, and separate credentials per environment.
+- Validate untrusted input before storage, network calls, provider SDKs, shell commands, template rendering, or generated artifacts.
+- Keep CI logs, package previews, and release artifacts free of secrets and private data.
+- Review [LICENSES.md](LICENSES.md) when dependencies or redistributed content change.
 
-## Incident response
+## Related documents
 
-For suspected key exposure, cache poisoning, source-log leakage, regional data drift, or abnormal provider routing:
-
-1. Revoke or rotate the exposed provider, Supabase, Databricks, Upstash, or Sentry secret at the provider first.
-2. Update the hosting, CI, Databricks secret scope, or Lakehouse Federation credential store.
-3. Rerun package checks for code changes; rerun `databricks bundle validate` and the real-stack smoke harness for stack changes.
-4. Review Supabase access logs, Databricks job and pipeline runs, Upstash key history/TTL, SDK decision-source metrics, and provider usage.
-5. Delete or overwrite only smoke-scoped cache keys during investigation unless you are intentionally restoring a production key from a known-good export.
-6. Open a private vulnerability report if the issue affects the public primitive, not only one private deployment.
-
-## Data handling
-
-- Attempt logs should store provider, model, outcome, timing, cost, cancellation state, and bounded metadata needed for routing quality.
-- Avoid storing raw prompts, generated media URLs, customer PII, or provider secrets in the attempt log.
-- Normalize `model` before writing logs, and keep source logs region-local or assign region through reviewed Databricks bundle configuration before ranking.
-- Set retention on raw Bronze/Silver tables according to your data-retention policy; request-path cache payloads should contain only provider IDs, scores, counts, and timestamps.
-- Treat provider attempt logs, account ids, cache keys, Sentry project details, bucket/resource names, and smoke artifacts as private deployment data unless you have explicitly sanitized them.
+- [CONTRIBUTING.md](CONTRIBUTING.md) explains how to propose safe changes.
+- [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) explains expected community behavior.
+- [LICENSES.md](LICENSES.md) explains dependency license review.
+- [CHANGELOG.md](CHANGELOG.md) records user-visible security and behavior changes.

@@ -1,12 +1,12 @@
 <div align="center">
 
-<img src="public/icon.png" width="120" alt="Adaptive Island icon" />
+<img src="public/icon.png" width="100" alt="Adaptive Island icon" />
 
 # Adaptive Island
 
 Cache-first provider selection engine for multi-provider inference workloads.
 
-### Every workload makes the next workload smarter
+### Every workload makes the next workload smarter.
 
 <br />
 
@@ -26,7 +26,7 @@ Cache-first provider selection engine for multi-provider inference workloads.
 [![Codecov](https://img.shields.io/codecov/c/github/babysea-community/adaptive-island?style=for-the-badge&label=codecov&logo=codecov&logoColor=white&color=FF0077&token=agMk6Yntq6)](https://codecov.io/github/babysea-community/adaptive-island)
 [![Sentry](https://img.shields.io/github/actions/workflow/status/babysea-community/adaptive-island/sentry-check.yml?style=for-the-badge&label=sentry&logo=sentry&logoColor=white&color=181225)](https://github.com/babysea-community/adaptive-island/actions/workflows/sentry-check.yml)
 [![CodeQL](https://img.shields.io/github/actions/workflow/status/babysea-community/adaptive-island/codeql.yml?style=for-the-badge&label=codeql&logo=github&logoColor=white)](https://github.com/babysea-community/adaptive-island/actions/workflows/codeql.yml)
-[![Package](https://img.shields.io/github/actions/workflow/status/babysea-community/adaptive-island/publish-check.yml?style=for-the-badge&label=package&logo=npm&logoColor=white)](https://github.com/babysea-community/adaptive-island/actions/workflows/publish-check.yml)
+[![Package](https://img.shields.io/github/actions/workflow/status/babysea-community/adaptive-island/package-check.yml?style=for-the-badge&label=package&logo=npm&logoColor=white)](https://github.com/babysea-community/adaptive-island/actions/workflows/package-check.yml)
 
 <br/>
 
@@ -580,4 +580,4 @@ We welcome PRs, issues, and design discussion. See [`CONTRIBUTING.md`](CONTRIBUT
 
 ## 12. License
 
-[Apache License 2.0](LICENSE). Use it, fork it, ship it. Just keep the notice.
+[Apache License 2.0](LICENSE). Use it, fork it, ship it.

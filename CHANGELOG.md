@@ -38,7 +38,7 @@ All notable changes will be documented here. The format follows [Keep a Changelo
 
 ### Changed
 
-- Reordered Python CI steps in GitHub Actions (`publish-check.yml`) and CircleCI (`config.yml`) to run `ruff check` before `pytest`, matching the lint-before-test convention followed by the TypeScript jobs.
+- Reordered Python CI steps in GitHub Actions (`package-check.yml`) and CircleCI (`config.yml`) to run `ruff check` before `pytest`, matching the lint-before-test convention followed by the TypeScript jobs.
 
 ## [0.3.5] - 2026-05-23
 

@@ -1,98 +1,108 @@
 # Contributing
 
-Thanks for improving Adaptive Island.
+Thanks for improving this project.
 
-Adaptive Island is a fail-open provider-ranking primitive extracted from BabySea's production routing pattern. Good contributions keep the runtime selector deterministic and safe when telemetry, cache, Databricks, or local stand-ins are unavailable.
+This repository is part of the BabySea OSS family. It may be an SDK, primitive, starter, documentation site, or another standalone project. Good contributions keep the public contract clear, the first-run path reliable, security boundaries explicit, and secrets out of public surfaces.
 
-## Contribution guidelines
+## Project direction
 
-- Keep all contributions under Apache 2.0. By submitting a PR you agree to license it under Apache 2.0.
-- Preserve v1 schemas. If a change requires breaking `schemas/attempt.v1.json` or `schemas/ranking.v1.json`, publish a v2 alongside it.
-- Preserve fail-open behavior. Any code path reachable from `Selector.rank(...)` or `Selector.pick(...)` must never depend on Databricks and must fall back on missing or malformed cache data.
-- Keep runtime behavior aligned with the verified BabySea pattern: Supabase attempt logs, Databricks medallion ranking, Upstash cache export, deterministic fallback.
-- Keep production scope narrow. Do not document or implement alternate production warehouses, queues, caches, online exploration systems, or promotion gates in this primitive.
-- Keep the TypeScript and Python SDK behavior in sync when changing selector logic or payload contracts.
-- Prefer focused changes. Avoid unrelated refactors in SDK code, schemas, bundle config, or deployment docs.
+Use [README.md](README.md) as the source of truth for this project's purpose, supported workflows, runtime boundaries, and validation steps. If this project includes [AGENTS.md](AGENTS.md), follow it for repository-specific development guidance.
 
-## Documentation standard
-
-Adaptive Island docs are part of the public runtime contract. Keep them factual, operator-ready, and tied to behavior that exists in this repository.
-
-- Start from the README contract: what the primitive is, what it is not, how to deploy it, how to validate it, and how to recover it.
-- Use exact environment variable names, bundle variables, cache key shapes, schema names, commands, and file paths.
-- Keep the stack boundary explicit: production docs use Databricks, Supabase, and Upstash. PostgreSQL and Redis appear only for Lakehouse Federation, Supabase-compatible endpoints, Upstash's Redis protocol, or local stand-ins.
-- Document validation steps beside operational claims. If a guide says a path is production-ready, include the check, workflow, or smoke harness that proves it.
-- Keep security guidance concrete: where secrets live, which values must not be logged, how keys are rotated, and what should never be posted publicly.
-- Update `CHANGELOG.md` for user-visible docs, configuration, security, SDK behavior, schema, deployment, or operations changes.
-- Avoid roadmap language in the public contract. New features stay out of README claims until implemented, documented, and validated for this stack.
-
-When a change touches these areas, review the matching docs before opening a PR:
-
-| Change area                    | Required docs to review                                                  |
-| :----------------------------- | :----------------------------------------------------------------------- |
-| SDK ranking or fail-open logic | README runtime flow, `docs/testing-failure-modes.md`, client READMEs     |
-| Cache payload or key shape     | README cache section, `schemas/ranking.v1.json`, export job docs         |
-| Attempt-log source contract    | README quick start, `docs/data-contract.md`, adapter and Supabase examples |
-| Databricks bundle variables    | README production readiness, `docs/deploy-on-databricks.md`, bundle README |
-| Scoring formula or window      | README architecture, `docs/scoring-config.md`, `docs/evaluation-metrics.md` |
-| Sentry or CI workflows         | README production readiness, `SECURITY.md`, this contributing guide       |
-| Security or secret handling    | README production readiness, `SECURITY.md`, real-stack smoke docs         |
+Prefer changes that make this project easier to adopt, operate, secure, test, and maintain. Avoid adding features that do not match the documented scope in [README.md](README.md).
 
 ## Development flow
 
-### Python SDK
+1. Install dependencies using the package manager and commands documented in [README.md](README.md) or the project manifest.
 
-```bash
-git clone https://github.com/babysea-community/adaptive-island
-cd adaptive-island
-pip install -e "./client/python[dev]"
-ruff check client/python
-pyright client/python
-pytest tests/python
-```
+   ```bash
+   pnpm install --frozen-lockfile
+   ```
 
-### TypeScript SDK
+2. If this project includes an environment template, copy it before running local services.
 
-The published SDK targets Node.js 22+ at runtime. Local TypeScript SDK development uses the Vitest 4/Vite 8 toolchain and requires Node.js 22.12+.
+   ```bash
+   cp .env.example .env.local
+   ```
 
-```bash
-cd client/typescript
-npm install
-npm run lint
-npm run test:coverage
-npm run build
-```
+3. Configure only the values required by [README.md](README.md) or `.env.example`. Keep all secrets local.
 
-### Full local stack
+4. Run the local validation commands documented by this project. Common examples include:
 
-```bash
-cd examples/docker-compose-local
-docker compose up
-```
+   ```bash
+   pnpm format
+   pnpm lint
+   pnpm typecheck
+   pnpm test
+   pnpm build
+   ```
+
+If this project uses npm, Python, Docker, or another toolchain, use the equivalent commands documented in [README.md](README.md).
 
 ## Before opening a pull request
 
-Run the checks that match your change:
+Run every relevant check for the files you changed. If a command is not available in this repository, mention the equivalent validation in the pull request.
+
+Common checks include:
 
 ```bash
-ruff check client/python
-pyright client/python
-pytest tests/python
-cd client/typescript && npm run lint && npm run test:coverage && npm run build
+pnpm format
+pnpm lint
+pnpm typecheck
+pnpm test
+pnpm build
 ```
 
-If you touched schemas, examples, bundle config, or docs, validate the relevant examples and generated artifacts before opening the PR.
+For package projects, also run the package dry-run documented in [README.md](README.md). For infrastructure or deployment changes, include the validation command that proves the configuration still loads.
+
+## Contribution guidelines
+
+- Keep the public repo friendly: no secrets, private project ids, local-only URLs, personal generated media, signed URLs, customer data, or private internal references.
+- Keep changes inside this project's documented scope. If the scope should change, update [README.md](README.md) and explain the reasoning in the pull request.
+- Keep public APIs, schemas, command-line flags, environment variables, deployment behavior, and generated outputs versioned and documented.
+- Add or update tests for user-visible behavior, data contracts, security-sensitive paths, and bug fixes.
+- Keep adapters thin and business logic testable when this project includes runtime code.
+- Validate untrusted input before it reaches storage, network calls, provider SDKs, shell commands, templates, or generated artifacts.
+- Do not log secrets, credentials, tokens, prompts, private media, customer data, or signed URLs.
+- Keep every secret described in `.env.example` server-side unless that template explicitly marks the value as public.
+- Update [README.md](README.md), [CHANGELOG.md](CHANGELOG.md), [SECURITY.md](SECURITY.md), and tests when behavior, configuration, security posture, or operations change.
+
+## Documentation standard
+
+Documentation is part of the release contract. Keep it factual, operator-ready, and tied to behavior that exists in the repository.
+
+- Start from [README.md](README.md): what this project is, what it is not, how to install or deploy it, how to validate it, and how to recover or debug common issues.
+- Use `.env.example` as the source of truth for environment variable names when the project has runtime configuration.
+- Document validation steps beside operational claims.
+- Keep security guidance concrete: where secrets live, which values are browser-visible, how to rotate keys, and what should never be posted publicly.
+- Update [CHANGELOG.md](CHANGELOG.md) for user-visible docs, configuration, security, operations, API, schema, or packaging changes.
+- Avoid roadmap language in the public contract. New features stay out of README claims until implemented, documented, and validated.
+
+When a change touches these areas, review the matching docs before opening a pull request:
+
+| Change area                                        | Required docs to review                                 |
+| :------------------------------------------------- | :------------------------------------------------------ |
+| Public API, SDK exports, schemas, or CLI flags     | README, CHANGELOG.md, tests                             |
+| Required or optional environment values            | README, `.env.example`, SECURITY.md                     |
+| Authentication, authorization, webhooks, or keys   | README, SECURITY.md, tests                              |
+| Provider, network, storage, queue, or database use | README, SECURITY.md, deployment docs, tests             |
+| Packaging, CI, release, or deployment behavior     | README, CHANGELOG.md, LICENSES.md, workflow files       |
+| Documentation-only changes                         | README, CHANGELOG.md, CODE_OF_CONDUCT.md where relevant |
 
 ## Issue triage
 
 - `bug` - reproducible defect, with logs, a failing test, or a minimal reproduction.
 - `proposal` - scoped design idea with the user problem, implementation sketch, and validation path.
 - `good first issue` - small, well-scoped change that can be validated without production credentials.
+- `security` - do not open public issues for vulnerabilities; follow [SECURITY.md](SECURITY.md).
 
 ## Conduct
 
-See [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md). Be respectful, assume good faith, and keep discussion focused on the work and the people using it.
+See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md). Be respectful, assume good faith, and keep discussion focused on the work and the people using it.
 
 ## Security-sensitive changes
 
-Open security fixes privately through the process in [`SECURITY.md`](SECURITY.md). Do not include real Databricks tokens, Supabase passwords, Upstash URLs, provider credentials, Sentry tokens, customer data, private attempt logs, raw prompts, generated media URLs, production cache keys, or deployment details in public issues, pull requests, test fixtures, logs, or screenshots.
+Open security fixes privately through the process in [SECURITY.md](SECURITY.md). Do not include secrets, deployment details, unreleased vulnerability details, private prompts, reference media, generated media, customer data, or signed URLs in public issues, pull requests, test fixtures, logs, or screenshots.
+
+## License compliance
+
+Review [LICENSES.md](LICENSES.md) before adding dependencies or redistributed content. Dependency license changes should be called out in the pull request and reflected in [CHANGELOG.md](CHANGELOG.md) when they affect users.

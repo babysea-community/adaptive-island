@@ -23,9 +23,6 @@ coverage:
         threshold: 10%
         if_ci_failed: error
 
-fixes:
-  - 'src/::client/typescript/src/'
-
 comment:
   layout: 'diff, flags, files'
   behavior: default

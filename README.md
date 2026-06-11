@@ -22,7 +22,7 @@ Cache-first provider selection engine for multi-provider inference workloads.
 <strong>Checks</strong>
 
 [![GitLabCI](https://img.shields.io/gitlab/pipeline-status/babysea/adaptive-island?branch=main&style=for-the-badge&label=gitlabci&logo=gitlab&logoColor=white&color=FC6D26)](https://gitlab.com/babysea/adaptive-island/-/commits/main)
-[![CircleCI](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fcircleci.com%2Fapi%2Fv1.1%2Fproject%2Fcircleci%2F2uTLcwc4naeNuKDP41es88%2F2J2hRNFoYs3zzDnuULUTR3%2Ftree%2Fmain%3Flimit%3D1&query=%24%5B0%5D.status&style=for-the-badge&logo=circleci&logoColor=white&label=circleci&color=003740)](https://dl.circleci.com/status-badge/redirect/circleci/2uTLcwc4naeNuKDP41es88/2J2hRNFoYs3zzDnuULUTR3/tree/main)
+[![CircleCI](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fcircleci.com%2Fapi%2Fv1.1%2Fproject%2Fcircleci%2F2uTLcwc4naeNuKDP41es88%2FEGomeQrEcDBm1vy8xuMFbV%2Ftree%2Fmain%3Flimit%3D1&query=%24%5B0%5D.status&style=for-the-badge&logo=circleci&logoColor=white&label=circleci&color=003740)](https://dl.circleci.com/status-badge/redirect/circleci/2uTLcwc4naeNuKDP41es88/EGomeQrEcDBm1vy8xuMFbV/tree/main)
 [![Codecov](https://img.shields.io/codecov/c/github/babysea-community/adaptive-island?style=for-the-badge&label=codecov&logo=codecov&logoColor=white&color=FF0077&token=agMk6Yntq6)](https://codecov.io/github/babysea-community/adaptive-island)
 [![Sentry](https://img.shields.io/github/actions/workflow/status/babysea-community/adaptive-island/sentry-check.yml?style=for-the-badge&label=sentry&logo=sentry&logoColor=white&color=181225)](https://github.com/babysea-community/adaptive-island/actions/workflows/sentry-check.yml)
 [![CodeQL](https://img.shields.io/github/actions/workflow/status/babysea-community/adaptive-island/codeql.yml?style=for-the-badge&label=codeql&logo=github&logoColor=white)](https://github.com/babysea-community/adaptive-island/actions/workflows/codeql.yml)
@@ -570,7 +570,7 @@ Container scanning is present in CI but only runs when `CS_IMAGE` is configured 
 
 ### Related projects
 
-- [BabySea SDK](https://github.com/babysea-community/babysea): Production TypeScript SDK for the BabySea execution control plane for generative media.
+- [BabySea SDK](https://github.com/babysea-community/babysea): Execution control plane SDK for generative media.
 - [Ledger Fortress](https://github.com/babysea-community/ledger-fortress): Atomic credit settlement engine for async inference workloads.
 - [Rosetta Bridge](https://github.com/babysea-community/rosetta-bridge): Request normalization engine for multi-provider inference workloads.
 

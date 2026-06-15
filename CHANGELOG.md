@@ -2,7 +2,7 @@
 
 All notable changes will be documented here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [Unreleased]
 
 ### Added
 
@@ -23,7 +23,7 @@ All notable changes will be documented here. The format follows [Keep a Changelo
 
 ### Changed
 
-- Standardized `SECURITY.md` to the shared primitive structure: Title Case heading, canonical section order (Supported versions → Reporting a vulnerability → Sentry code guard → Runtime posture → Security model → Secret handling → Operational guardrails → Incident response → Data handling), and unified heading wording (`Reporting a vulnerability`, `Runtime posture`, `Security model`, `Data handling`).
+- Standardized `SECURITY.md` to the shared primitive structure: Title Case heading, canonical section order (Supported versions → Reporting a vulnerability → code guard → Runtime posture → Security model → Secret handling → Operational guardrails → Incident response → Data handling), and unified heading wording (`Reporting a vulnerability`, `Runtime posture`, `Security model`, `Data handling`).
 - Reordered `CONTRIBUTING.md` so `Documentation standard` sits directly after `Contribution guidelines` and before `Development flow`, matching `ledger-fortress` and `rosetta-bridge`.
 - Added a `## Scope` section to `AGENTS.md` describing the supported stack, BabySea production lineage, exclusions, and naming, matching the other primitives.
 
@@ -38,14 +38,13 @@ All notable changes will be documented here. The format follows [Keep a Changelo
 
 ### Changed
 
-- Reordered Python CI steps in GitHub Actions (`package-check.yml`) and CircleCI (`config.yml`) to run `ruff check` before `pytest`, matching the lint-before-test convention followed by the TypeScript jobs.
+- Reordered Python CI steps in GitHub Actions (`package-check.yml`) to run `ruff check` before `pytest`, matching the lint-before-test convention followed by the TypeScript jobs.
 
 ## [0.3.5] - 2026-05-23
 
 ### Fixed
 
 - Hardened Upstash cache URL host checks to parse hostnames before enabling trusted-host TLS behavior, resolving CodeQL URL substring alerts.
-- Replaced Sentry URL trailing-slash regex normalization with a bounded string scan to avoid CodeQL ReDoS noise.
 
 ## [0.3.4] - 2026-05-23
 
@@ -68,26 +67,25 @@ All notable changes will be documented here. The format follows [Keep a Changelo
 
 ### Changed
 
-- Replaced the native CircleCI README badge with a Shields.io badge that matches the project badge style.
 - Replaced the static Snyk README badge with a realtime Snyk Security workflow status badge.
 
 ## [0.3.1] - 2026-05-22
 
 ### Added
 
-- Added a CircleCI native badge.
+- Added a check native badge.
 
 ## [0.3.0] - 2026-05-22
 
 ### Added
 
-- Added a CircleCI package-check workflow for adaptive-island TypeScript lint/coverage/build/package validation, Python pytest/ruff validation, and trusted `main` Codecov CLI upload when `CODECOV_TOKEN` is configured in CircleCI.
+- Added a trusted `main` Codecov CLI upload when `CODECOV_TOKEN` is configured.
 
 ## [0.2.9] - 2026-05-22
 
 ### Added
 
-- Added repository `codecov.yml` with GitHub Actions and CircleCI provider recognition, CI-gated Codecov status, pull request comment configuration, and TypeScript client path fixes.
+- Added repository `codecov.yml` with GitHub Actions provider recognition, CI-gated Codecov status, pull request comment configuration, and TypeScript client path fixes.
 
 ### Changed
 
@@ -104,11 +102,7 @@ All notable changes will be documented here. The format follows [Keep a Changelo
 ### Changed
 
 - Standardized contributing and code-of-conduct guidance with the shared BabySea OSS documentation standard.
-- Upgraded Package Check, Sentry Project Check, and CodeQL workflows to Node 24-compatible GitHub Action majors, including Codecov upload via `codecov/codecov-action@v6`.
-
-### Fixed
-
-- Made the Sentry project check skip cleanly when all Sentry repository secrets are absent, fail partial secret configuration, and treat permission-limited Sentry API responses as advisory when explicitly enabled by CI.
+- Upgraded Package Check and CodeQL workflows to Node 24-compatible GitHub Action majors, including Codecov upload via `codecov/codecov-action@v7`.
 
 ## [0.2.6] - 2026-05-22
 
@@ -144,10 +138,6 @@ All notable changes will be documented here. The format follows [Keep a Changelo
 - Cleaned formatting in the existing-event-log adoption example without changing its deployment flow.
 
 ## [0.2.1] - 2026-05-17
-
-### Security
-
-- Hardened `scripts/sentry-project-check.mjs` with normalized config parsing, HTTPS-only Sentry URL validation except localhost, bounded retry handling, strict Sentry API response-shape checks, stronger secret redaction, and stackless failure output. No runtime Sentry SDK, DSN, or telemetry is added.
 
 ### Changed
 
@@ -192,9 +182,7 @@ All notable changes will be documented here. The format follows [Keep a Changelo
 - Added standalone external-repo workflows under `.github/workflows/` for CodeQL, TypeScript package checks, Python package checks, local SDK demo validation, and package dry-runs.
 - Added an explicit README status note explaining that this is a production-grade OSS primitive with a stable v0.1 runtime contract.
 - Added README workflow badges for the standalone CodeQL and Package Check workflows.
-- Added `scripts/sentry-project-check.mjs`, a README badge, ignored local `.sentryclirc` support, and a scheduled `Sentry Project Check` workflow. The workflow reads Sentry org/project configuration from GitHub Actions secrets, verifies the configured project slug, active status, `other` platform, ownership, and Code Guard rules, and does not add runtime tracking.
 - Real-stack smoke harness under `examples/real-stack-smoke/` for Databricks API access, Databricks Asset Bundle shape, disposable Supabase `provider_cost_log` scoring, safe smoke-scoped Upstash ranking writes, and Python SDK cache reads.
-- Sentry code-guard for the `babysea-community/adaptive-island` OSS project.
 - Standalone OSS security policy and Dependabot dependency-security configuration for the public `babysea-community/adaptive-island` repository.
 - Lakeflow Spark Declarative Pipelines for Bronze, Silver, and Gold layers on Delta Lake.
 - MLflow value-model training entry point for optional Mosaic AI Model Serving re-score.

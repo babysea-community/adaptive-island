@@ -30,8 +30,12 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist",
+    "CHANGELOG.md",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "CODE_OF_CONDUCT.md",
+    "CONTRIBUTING.md",
+    "SECURITY.md"
   ],
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts --clean",
@@ -46,6 +50,6 @@
     "vitest": "^4.1.5"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=24.14.0 <25"
   }
 }

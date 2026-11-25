@@ -11,7 +11,7 @@ All notable changes will be documented here. The format follows [Keep a Changelo
 ### Changed
 
 - Raised the TypeScript client package engine and documented runtime floor to Node.js 22+, with the client lockfile refreshed after reinstall.
-- Standardized GitLab application security coverage with SAST-IaC, guarded Container Scanning, shared security variables, and license-compliance documentation.
+- Standardized GitLab application security with SAST-IaC, guarded Container Scanning, shared security variables, and license-compliance documentation.
 
 ## [0.3.9] - 2026-05-25
 
@@ -31,8 +31,8 @@ All notable changes will be documented here. The format follows [Keep a Changelo
 
 ### Added
 
-- Added a GitLab CI pipeline for TypeScript lint, coverage, build, package validation, Python lint/tests, dependency audit, secret scanning, Code Quality, SAST, and Dependency Scanning.
-- Added GitLab provider recognition, Cobertura coverage output, and a README GitLabCI badge.
+- Added a GitLab CI pipeline for TypeScript lint, build, package validation, Python lint/tests, dependency audit, secret scanning, Code Quality, SAST, and Dependency Scanning.
+- Added GitLab provider recognition, Cobertura output, and a README GitLabCI badge.
 
 ## [0.3.6] - 2026-05-24
 
@@ -85,7 +85,7 @@ All notable changes will be documented here. The format follows [Keep a Changelo
 
 ### Changed
 
-- Updated trusted Package Check Codecov uploads to pass `CODECOV_TOKEN` through the action environment and fail CI when coverage upload fails.
+- Updated trusted Package Check Codecov uploads to pass `CODECOV_TOKEN` through the action environment and fail CI when upload fails.
 
 ## [0.2.8] - 2026-05-22
 
@@ -104,7 +104,7 @@ All notable changes will be documented here. The format follows [Keep a Changelo
 
 ### Added
 
-- Added TypeScript coverage generation and Package Check Codecov upload using `client/typescript/coverage/lcov.info`.
+- Added TypeScript generation and Package Check Codecov upload using `client/typescript/coverage/lcov.info`.
 
 ## [0.2.5] - 2026-05-21
 
